@@ -10,10 +10,10 @@ NM           = $(CROSS_COMPILE)nm
 STRIP        = $(CROSS_COMPILE)strip
 OBJCOPY      = $(CROSS_COMPILE)objcopy
 OBJDUMP      = $(CROSS_COMPILE)objdump
-CLANG		 = clang++
+CLANG		 = clang++-10
 
-GEM5_PATH = ../../../gem5_bfs/
-PF_PASS_PATH = ../../package/plugin-llvm-sw-prefetch-pass/build/
+GEM5_PATH = ../../../gem5_bfs
+PF_PASS_PATH = ../../package/plugin-llvm-sw-prefetch-pass/build
 
 M5_CFLAGS       = -I${GEM5_PATH}/include -g -O2
 M5_CFLAGS      += -S -emit-llvm --target=aarch64-linux-gnu  -march=armv8-a+nosimd+nosve
