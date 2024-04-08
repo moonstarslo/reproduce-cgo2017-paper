@@ -1,11 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(SwPrefetchPass)
 
-if (DEFINED LLVM_BUILD_DIR)
-find_package(LLVM REQUIRED PATHS "${LLVM_BUILD_DIR}")
-else ()
-find_package(LLVM REQUIRED CONFIG)
-endif ()
+find_package(/usr/lib/llvm-10/lib/cmake/llvm/LLVM)
 
 add_definitions(${LLVM_DEFINITIONS})
 include_directories(${LLVM_INCLUDE_DIRS})
