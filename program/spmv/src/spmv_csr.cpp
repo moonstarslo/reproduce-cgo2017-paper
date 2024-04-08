@@ -1,9 +1,9 @@
-#include <algorithm>
-#include <time.h>
+// #include <algorithm>
+// #include <time.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/mman.h>
+// #include <sys/mman.h>
 #include "../../../../gem5_bfs/include/gem5/m5ops.h"
 
 const int max_row = 5000000;
