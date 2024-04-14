@@ -13,6 +13,7 @@
 //  的节点作为起点，最终输出为每一个节点的深度。
 
 #define cache_size 1048576
+#define max_num 10000000
 #define kernel_iter_times 1
 
 int row, col, nnz, depth = 0;
@@ -20,13 +21,22 @@ int temp_row, temp_column;
 double temp_value;
 int start_point;
 
-int *const out_degree = (int *)0x80000000;
-int *const result = (int *)0x90000000;
-int *const row_ptr = (int *)0xa0000000;
-int *const col_idx = (int *)0xb0000000;
-bool *const vis = (bool *)0xc0000000;
-int *const bfs_queue = (int *)0xd0000000;
-double *const value = (double *)0xe0000000;
+// int *const out_degree = (int *)0x80000000;
+// int *const result = (int *)0x90000000;
+// int *const row_ptr = (int *)0xa0000000;
+// int *const col_idx = (int *)0xb0000000;
+// bool *const vis = (bool *)0xc0000000;
+// int *const bfs_queue = (int *)0xd0000000;
+// double *const value = (double *)0xe0000000;
+
+int out_degree[max_num];
+int result[max_num];
+int col_idx[max_num];
+int row_ptr[max_num];
+bool vis[max_num];
+int bfs_queue[max_num];
+double value[max_num];
+
 int queue_start_ptr = 0, queue_end_ptr = 1;
 // queue<int> * const bfs_queue = (queue<int> *)0xd0000000;
 
