@@ -21,11 +21,11 @@ void  mul(double *ret, double *vec, double *val,int *row_ptr, int *col_idx)
 
             ldr	d0, [x0, x9, lsl #3]   // ret[i] -> d0
             sxtw	x12, w11
-            sub	x12, x12, w14, sxtw    // this row - last row = x12
-            add	x13, x4, w14, sxtw #2  // j -> x13
-            add	x14, x2, w14, sxtw #3  // j-> x14
-  label-3:  ldr	d1, [x14], #8          // val[j] -> d1
-       	  ldrsw	x15, [x13], #4         // col_idx[j] -> x15
+            sub	x12, x12, w14, sxtw    // this row - last row = x12, w14 = row_ptr[i]/start j
+            add	x13, x4, w14, sxtw #2  // addr of col_idx[j] -> x13, base address of col_idx[] = x4
+            add	x14, x2, w14, sxtw #3  // addr of val[j]     -> x14, base address of val[] = x2
+  label-3:  ldr	d1, [x14], #8          // val[j] -> d1 , then x14 = x14 + 8, next time load val[j+1]
+       	  ldrsw	x15, [x13], #4         // col_idx[j] -> x15, then x13 = x13 + 4, next time load col_idx[j+1]
        	  subs	x12, x12, #0x1         // (this_row - last_row)-1 -> x12
        	  ldr	d2, [x1, x15, lsl #3]  // vec[col_idx[j]] -> d2
        	  fmul	d1, d1, d2            
