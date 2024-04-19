@@ -15,12 +15,12 @@ CLANG		 = clang++-10
 GEM5_PATH = ../../../gem5_bfs
 PF_PASS_PATH = ../../package/plugin-llvm-sw-prefetch-pass/build
 
-M5_CFLAGS       = -I${GEM5_PATH}/include -g -O2
+M5_CFLAGS       = -I${GEM5_PATH}/include -g -O3
 M5_CFLAGS      += -S -emit-llvm --target=aarch64-linux-gnu  -march=armv8-a+nosimd+nosve
 M5_CFLAGS      += -I /usr/aarch64-linux-gnu/include/c++/7/aarch64-linux-gnu/ -I /usr/aarch64-linux-gnu/include/
 M5_PF_CFLAGS    = $(M5_CFLAGS)
 M5_PF_CFLAGS   += -Xclang -load -Xclang ${PF_PASS_PATH}/SwPrefetchPass.so 
-M5_LLFLAGS   = --target=aarch64-linux-gnu -march=armv8-a+nosimd+nosve -O2
+M5_LLFLAGS   = --target=aarch64-linux-gnu -march=armv8-a+nosimd+nosve -O3
 ODFLAGS       = -S 
 M5_LDFLAGS		= -g -static
 M5_LDFLAGS     += -L${GEM5_PATH}/util/m5/build/arm64/out -lm5
