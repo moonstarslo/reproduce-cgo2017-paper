@@ -1,4 +1,3 @@
-#include <iostream>
 #include <algorithm>
 #include <time.h>
 #include <string.h>
@@ -6,11 +5,12 @@
 #include <stdio.h>
 #include <sys/mman.h>
 
-const int max_row = 5000000;
-const int max_col = 5000000;
-const int max_nnz = 10000000;
+const int max_row = 40000000;
+const int max_col = 40000000;
+const int max_nnz = 40000000;
 
 #define cache_size 24*1024*1024
+#define TEST_NUM 1000
 
 double cache_flush[cache_size];
 
@@ -47,13 +47,6 @@ void  mul(double *ret, double *vec, double *val,int *row_ptr, int *col_idx)
                 // printf("ret[i](%f\n)=ret[i]+(%f)*(%f)\n",ret[i],val[j],vec[col_idx[j]]);
             }
         }
-}
-
-static inline uint32_t rdtscp()
-{
-    uint32_t rv;
-    asm volatile("rdtscp" : "=a"(rv)::"edx", "ecx");
-    return rv;
 }
 
 int main(int argc,char *argv[]) 
@@ -168,13 +161,18 @@ int main(int argc,char *argv[])
         }
     }
 
-    long long time1, time2;
+    clock_t time1, time2;
 
-    time1 = rdtscp();
-    mul(ret, vec, val, row_ptr, col_idx);
-    time2 = rdtscp();
+    time1 = clock();
+    for(int i=0;i<TEST_NUM;i++){
+        mul(ret, vec, val, row_ptr, col_idx);
+    }
+    time2 = clock();
 
-    printf("execution time:%lld\n", time2-time1);
+    FILE *fp1 = fopen(argv[3], "a");
+    fprintf(fp1,"matrix name: %s   ", argv[2]);
+    fprintf(fp1,"execution time: %f ms\n", float(time2-time1)*1000/(TEST_NUM*CLOCKS_PER_SEC));
+    fclose(fp1);
 
     // // 命令行传入参数，表示输出矩阵位置
     // if ( argc == 4){
