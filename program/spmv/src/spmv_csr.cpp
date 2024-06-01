@@ -6,9 +6,9 @@
 // #include <sys/mman.h>
 #include "../../../../gem5_bfs/include/gem5/m5ops.h"
 
-const int max_row = 5000000;
-const int max_col = 5000000;
-const int max_nnz = 10000000;
+const int max_row = 30000000;
+const int max_col = 30000000;
+const int max_nnz = 30000000;
 
 #define cache_size 65536
 
@@ -50,7 +50,7 @@ typedef struct {
 
 COO mat[max_nnz];
 
-void  mul(double *ret, double *vec, double *val,int *row_ptr, int *col_idx) 
+void __attribute__((noinline)) mul(double *ret, double *vec, double *val,int *row_ptr, int *col_idx) 
 {
         int last_row, this_row;
         //按行分别计算结果向量中的不同分量
